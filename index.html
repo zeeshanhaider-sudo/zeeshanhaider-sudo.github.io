@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zeeshan Haider — Backend &amp; ERP Developer</title>
+<style>html,body{background:#0a0e17;margin:0;}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -29,7 +30,7 @@
   --font-body: 'Inter', sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
 body{
   background: var(--bg);
   color: var(--text);
@@ -54,33 +55,50 @@ body.locked{ overflow:hidden; height:100vh; }
 .loader-grid{
   position:absolute; inset:0; z-index:0;
   background-image:
-    linear-gradient(rgba(147,161,191,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(147,161,191,0.06) 1px, transparent 1px);
-  background-size:44px 44px;
-  mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 25%, transparent 78%);
+    linear-gradient(rgba(147,161,191,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147,161,191,0.035) 1px, transparent 1px);
+  background-size:76px 76px;
+  mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, #000 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, #000 20%, transparent 70%);
+  opacity:0; transform:scale(0.88); animation: bgspread 0.9s cubic-bezier(.2,.7,.3,1) forwards;
 }
-.loader-content{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; transition:opacity .4s ease, transform .4s ease; }
+.loader-vignette{ opacity:0; animation: bgfadein 0.9s ease forwards; }
+@keyframes bgspread{ to{ opacity:1; transform:scale(1); } }
+@keyframes bgfadein{ to{ opacity:1; } }
+.loader-content{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; transition:opacity .4s ease, transform .4s ease; opacity:0; animation: contentin 0.5s ease forwards .55s; }
+@keyframes contentin{ to{ opacity:1; } }
 
 .loader-logo-wrap{ position:relative; z-index:1; margin-bottom:34px; width:80px; height:80px; display:flex; align-items:center; justify-content:center; }
 .loader-glow{
   position:absolute; width:120px; height:120px; border-radius:50%;
   background:radial-gradient(circle, rgba(255,180,84,0.25), transparent 70%);
-  filter:blur(14px); animation: glowpulse 2.4s ease-in-out infinite;
+  filter:blur(14px); opacity:0; animation: glowin .4s ease forwards .6s, glowpulse 2.4s ease-in-out infinite 1s;
 }
+@keyframes glowin{ to{ opacity:.55; } }
 @keyframes glowpulse{ 0%,100%{ opacity:.55; transform:scale(0.9); } 50%{ opacity:1; transform:scale(1.08); } }
 .loader-mark{
   width:64px; height:64px; border-radius:16px; z-index:1; position:relative;
   background:rgba(255,180,84,0.05); border:1px solid rgba(255,180,84,0.28);
   display:flex; align-items:center; justify-content:center;
-  animation: markbreathe 2.6s ease-in-out infinite;
+  animation: markbreathe 2.6s ease-in-out infinite 1s;
 }
 .loader-mark svg{ width:34px; height:34px; overflow:visible; }
 .loader-mark path{
   fill:none; stroke:var(--amber); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round;
-  stroke-dasharray:60; stroke-dashoffset:60; animation: drawpath 1s ease forwards .1s;
+  stroke-dasharray:60; stroke-dashoffset:60; animation: drawpath 1s ease forwards .65s;
 }
+.loader-mark .loader-cursor{
+  fill:var(--amber); opacity:0; animation: cursorin .2s ease forwards 1.5s, blink 1s step-end infinite 1.7s;
+}
+@keyframes cursorin{ to{ opacity:1; } }
 @keyframes drawpath{ to{ stroke-dashoffset:0; } }
 @keyframes markbreathe{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.05); } }
+
+.loader-status{
+  font-family:var(--font-mono); font-size:12px; color:var(--text-faint); margin-top:10px; z-index:1;
+  height:16px; opacity:0; animation: fadein .5s ease forwards; animation-delay:1.25s;
+  transition: opacity .15s ease;
+}
 
 .loader-name{
   font-family:var(--font-display); font-weight:600; letter-spacing:.02em;
@@ -91,36 +109,42 @@ body.locked{ overflow:hidden; height:100vh; }
 @keyframes splitup{ to{ opacity:1; transform:translateY(0); filter:blur(0); } }
 .loader-role{
   font-family:var(--font-mono); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--text-faint); margin-top:12px; z-index:1; opacity:0; animation: fadein .6s ease forwards; animation-delay:.7s;
+  color:var(--text-faint); margin-top:12px; z-index:1; opacity:0; animation: fadein .6s ease forwards; animation-delay:1.2s;
 }
 @keyframes fadein{ to{ opacity:1; } }
 
+/* moving code ticker across the loader scene */
+.loader-ticker{
+  position:absolute; bottom:0; left:0; width:100%; overflow:hidden; z-index:0;
+  opacity:0; animation: fadein .6s ease forwards 0.9s;
+  padding:14px 0; border-top:1px solid rgba(255,255,255,0.05);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.loader-ticker-track{
+  display:flex; gap:48px; white-space:nowrap; width:max-content;
+  font-family:var(--font-mono); font-size:12.5px; color:var(--text-faint); letter-spacing:.03em;
+  animation: tickmove 16s linear infinite;
+}
+.loader-ticker-track span{ color:var(--amber-dim); }
+@keyframes tickmove{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+
 .loader-barwrap{
   width:200px; height:2px; background:rgba(255,255,255,0.08); margin-top:32px; z-index:1; overflow:hidden; border-radius:2px;
-  opacity:0; animation: fadein .5s ease forwards; animation-delay:.8s;
+  opacity:0; animation: fadein .5s ease forwards; animation-delay:1.3s;
 }
 .loader-bar{ height:100%; width:0%; background:var(--amber); }
 .loader-pct{
   font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:12px; z-index:1;
-  opacity:0; animation: fadein .5s ease forwards; animation-delay:.8s; letter-spacing:.1em;
+  opacity:0; animation: fadein .5s ease forwards; animation-delay:1.3s; letter-spacing:.1em;
 }
 
-/* door-open exit */
-.door{
-  position:absolute; top:0; width:50%; height:100%; background:var(--bg); z-index:5;
-  transition: transform .95s cubic-bezier(.76,0,.24,1);
-}
-.door-left{ left:0; border-right:1px solid rgba(255,180,84,0.18); }
-.door-right{ right:0; border-left:1px solid rgba(255,180,84,0.18); }
-#preloader.opening .loader-content{ opacity:0; transform:scale(.94); }
-#preloader.opening .door-left{ transform:translateX(-100%); }
-#preloader.opening .door-right{ transform:translateX(100%); }
-.door-seam{
-  position:absolute; top:0; left:50%; width:2px; height:100%; z-index:6; transform:translateX(-50%);
-  background:linear-gradient(var(--amber), transparent 70%); opacity:0; pointer-events:none;
-}
-#preloader.opening .door-seam{ animation: seamflash .95s ease forwards; }
-@keyframes seamflash{ 0%{ opacity:0; } 15%{ opacity:.9; } 100%{ opacity:0; } }
+/* preloader exit — simple fade, no doors */
+#preloader{ transition: opacity .8s ease; }
+#preloader.opening{ opacity:0; }
+#preloader.opening .loader-content{ transform:scale(.94); }
+/* door-seam removed per request */
 
 /* ---------- glass panels ---------- */
 .glass{
@@ -180,37 +204,52 @@ h2.section-title{
 .reveal-stagger.in > *:nth-child(5){transition-delay:.45s;}
 
 /* ---------- background grid + glow ---------- */
+.bg-clip{
+  position:absolute; inset:0; width:100%; height:100%; overflow:hidden; z-index:0; pointer-events:none;
+}
 .bg-grid{
-  position:fixed; inset:0; z-index:0; pointer-events:none;
+  position:absolute; inset:0; z-index:0; pointer-events:none;
   background-image:
     linear-gradient(rgba(110,193,228,0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(110,193,228,0.05) 1px, transparent 1px);
   background-size: 42px 42px;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
 }
 .bg-glow{
-  position:fixed; z-index:0; pointer-events:none; border-radius:50%;
+  position:absolute; z-index:0; pointer-events:none; border-radius:50%;
   filter: blur(90px); opacity:.35; transition: transform .3s ease-out;
+  animation: glowbreathe 9s ease-in-out infinite;
+  transform: translateZ(0);
 }
-.glow-1{ width:520px; height:520px; background:var(--amber); top:-160px; left:-120px; }
-.glow-2{ width:460px; height:460px; background:var(--blue); top:200px; right:-160px; opacity:.18; }
-.glow-3{ width:420px; height:420px; background:var(--coral); bottom:-140px; left:38%; opacity:.14; }
+@keyframes glowbreathe{ 0%,100%{ filter:blur(90px); } 50%{ filter:blur(110px); } }
+.glow-1{ width:520px; height:520px; background:var(--amber); top:-160px; left:-120px; opacity:.28; animation-delay:0s; }
+.glow-2{ width:460px; height:460px; background:var(--amber); top:200px; right:-160px; opacity:.14; animation-delay:-3s; }
+.glow-3{ width:420px; height:420px; background:var(--amber); bottom:-140px; left:38%; opacity:.10; animation-delay:-6s; }
+@media (prefers-reduced-motion: reduce){ .bg-glow{ animation:none; } }
+@media (max-width:900px){
+  .bg-glow{ filter: blur(50px); animation:none; }
+  .glow-1{ width:300px; height:300px; }
+  .glow-2{ width:260px; height:260px; }
+  .glow-3{ width:240px; height:240px; }
+}
 
 /* ---------- navbar ---------- */
 nav{
   position:fixed; top:18px; left:18px; right:18px; z-index:500;
   display:flex; align-items:center; justify-content:space-between;
-  padding:14px 26px; transition: background .35s ease, border-color .35s ease, padding .35s ease, top .35s ease, box-shadow .35s ease;
+  padding:14px 26px; transition: background .35s ease, border-color .35s ease, padding .35s ease, top .35s ease, box-shadow .35s ease, backdrop-filter .35s ease;
   border-radius:16px;
-  background: rgba(18,26,43,0.45);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.045);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.09);
 }
 nav.scrolled{
-  background: rgba(13,18,32,0.72); backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border-color: rgba(255,180,84,0.15); padding:11px 26px; top:12px;
-  box-shadow: 0 12px 40px -18px rgba(0,0,0,.6);
+  background: rgba(255,255,255,0.065);
+  backdrop-filter: blur(26px) saturate(170%); -webkit-backdrop-filter: blur(26px) saturate(170%);
+  border-color: rgba(255,180,84,0.18); padding:11px 26px; top:12px;
+  box-shadow: 0 12px 40px -18px rgba(0,0,0,.45);
 }
 .logo{
   font-family:var(--font-mono); font-weight:600; font-size:16px; color:var(--text);
@@ -234,11 +273,42 @@ nav.scrolled{
   transition:background .25s, color .25s;
 }
 .nav-cta:hover{ background:var(--amber); color:#0a0e17; }
-.nav-toggle{ display:none; }
+.nav-toggle{
+  display:none; width:34px; height:34px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.04); position:relative; cursor:pointer; flex-shrink:0;
+}
+.nav-toggle span{
+  position:absolute; left:8px; right:8px; height:1.5px; background:var(--text); border-radius:2px;
+  transition: transform .3s ease, opacity .3s ease;
+}
+.nav-toggle span:nth-child(1){ top:12px; }
+.nav-toggle span:nth-child(2){ top:17px; }
+.nav-toggle span:nth-child(3){ top:22px; }
+.nav-toggle.open span:nth-child(1){ transform:translateY(5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2){ opacity:0; }
+.nav-toggle.open span:nth-child(3){ transform:translateY(-5px) rotate(-45deg); }
+
+.nav-mobile-panel{
+  position:fixed; top:74px; left:18px; right:18px; z-index:499;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(26px) saturate(170%); -webkit-backdrop-filter: blur(26px) saturate(170%);
+  border: 1px solid rgba(255,255,255,0.09); border-radius:16px;
+  display:flex; flex-direction:column; padding:10px; gap:2px;
+  opacity:0; transform:translateY(-10px); pointer-events:none;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.nav-mobile-panel.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
+.nav-mobile-panel a{
+  color:var(--text-dim); text-decoration:none; font-size:15px; padding:13px 14px; border-radius:10px; transition:background .2s, color .2s;
+}
+.nav-mobile-panel a:hover, .nav-mobile-panel a:active{ background:rgba(255,255,255,0.05); color:var(--text); }
+.nav-mobile-panel .nav-cta{ margin-top:4px; text-align:center; }
 @media (max-width:860px){
   .nav-links{ display:none; }
+  .nav-cta{ display:none; }
   .nav-toggle{ display:block; }
 }
+@media (min-width:861px){ .nav-mobile-panel{ display:none; } }
 
 /* ---------- hero ---------- */
 .hero{
@@ -297,11 +367,26 @@ nav.scrolled{
 .fs-2{ top:30%; right:8%; }
 .fs-3{ bottom:14%; left:10%; }
 
+@media (max-width:900px){
+  .float-shape{ opacity:.4; }
+  .fs-1{ width:190px !important; height:190px !important; top:8%; left:-8%; }
+  .fs-2{ width:150px !important; height:150px !important; top:52%; right:-10%; }
+  .fs-3{ width:170px !important; height:170px !important; bottom:5%; left:-9%; }
+}
+@media (max-width:480px){
+  .fs-1{ width:150px !important; height:150px !important; top:6%; left:-10%; }
+  .fs-2{ width:120px !important; height:120px !important; top:48%; right:-12%; }
+  .fs-3{ width:135px !important; height:135px !important; bottom:4%; left:-11%; }
+}
+
 /* ---------- about ---------- */
 .about{ padding:150px 0 120px; z-index:1; }
 .about-grid{ display:grid; grid-template-columns:1fr 1.15fr; gap:70px; align-items:center; }
 @media (max-width:900px){ .about-grid{ grid-template-columns:1fr; } }
-.about-art{ position:relative; }
+.about-art{ position:relative; width:100%; }
+.about-art svg{ width:100%; height:auto; }
+@media (max-width:900px){ .about-art svg{ max-height:380px; } }
+@media (max-width:480px){ .about-art svg{ max-height:340px; } }
 .about-text p{ color:var(--text-dim); font-size:15.5px; line-height:1.85; margin-bottom:18px; }
 .about-text strong{ color:var(--text); font-weight:600; }
 .tag-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:26px; }
@@ -318,6 +403,14 @@ nav.scrolled{
   backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
   border: 1px solid rgba(255,255,255,0.08); border-radius:12px; overflow:hidden;
   box-shadow: 0 30px 70px -30px rgba(0,0,0,.7);
+  transform-origin: center center; will-change: transform;
+  position:relative; z-index:2;
+}
+.stack-intro{ transition:none; position:relative; z-index:2; }
+#stack{ overflow:visible; }
+@media (min-width:901px){
+  #stack .wrap{ width:100%; }
+  #stack{ padding-top:10px !important; }
 }
 .mac-topbar{
   display:flex; align-items:center; gap:8px; padding:12px 16px; background:rgba(22,32,58,0.5); border-bottom:1px solid rgba(255,255,255,0.06);
@@ -417,10 +510,44 @@ nav.scrolled{
 footer{ padding:34px 0; text-align:center; color:var(--text-faint); font-family:var(--font-mono); font-size:12px; border-top:1px solid var(--line); z-index:1; position:relative; }
 footer a{ color:var(--text-dim); }
 
+@media (max-width:860px){
+  .about{ padding:100px 0 80px; }
+  .experience{ padding:80px 0; }
+  .skills{ padding:56px 0; }
+  .projects{ padding:80px 0; }
+  .contact{ padding:90px 0 70px; }
+  .section-sub{ margin-bottom:38px; }
+  .about-grid{ gap:44px; }
+}
 @media (max-width:600px){
   .wrap{ padding:0 20px; }
-  .hero{ padding-top:120px; }
-  .hero-stats{ gap:30px; }
+  .hero{ padding:110px 20px 60px; min-height:auto; }
+  .hero-stats{ gap:26px; margin-top:52px; }
+  .hero-actions{ gap:12px; }
+  .btn{ padding:12px 20px; font-size:13px; }
+  .hero-desc{ font-size:14.5px; }
+  .about{ padding:80px 0 64px; }
+  .about-grid{ gap:32px; }
+  .experience{ padding:64px 0; }
+  .timeline{ padding-left:26px; }
+  .tl-item{ padding-bottom:38px; }
+  .skills{ padding:48px 0; }
+  .skill-grid{ gap:10px; }
+  .skill-card{ padding:16px 14px; }
+  .projects{ padding:64px 0; }
+  .project-grid{ gap:18px; }
+  .mac-body{ padding:16px 16px; font-size:12px; min-height:220px; }
+  .mac-tabs{ gap:0; }
+  .mac-tab{ padding:6px 10px; font-size:11px; }
+  .contact{ padding:70px 0 56px; }
+  .contact-links{ gap:12px; }
+  .contact-card{ padding:11px 16px; font-size:12.5px; }
+  section{ overflow-x:hidden; }
+  .section-sub{ margin-bottom:32px; }
+}
+@media (max-width:400px){
+  .hero-stats{ gap:18px; }
+  .stat b{ font-size:24px; }
 }
 </style>
 </head>
@@ -438,27 +565,34 @@ footer a{ color:var(--text-dim); }
           <svg viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
             <path d="M13 8 L5 17 L13 26"/>
             <path d="M21 8 L29 17 L21 26"/>
+            <rect class="loader-cursor" x="16.2" y="11" width="1.6" height="12"/>
           </svg>
         </div>
       </div>
       <div class="loader-name" id="loaderName"></div>
       <div class="loader-role">Backend &amp; ERP Developer</div>
+      <div class="loader-status" id="loaderStatus">Initializing environment</div>
       <div class="loader-barwrap"><div class="loader-bar" id="loaderBar"></div></div>
       <div class="loader-pct" id="loaderPct">LOADING · 0%</div>
     </div>
-    <div class="door door-left"></div>
-    <div class="door door-right"></div>
-    <div class="door-seam"></div>
+    <div class="loader-ticker">
+      <div class="loader-ticker-track">
+        <span>&gt;</span> php artisan migrate &nbsp;&nbsp; <span>&gt;</span> odoo-bin update -d erp_db &nbsp;&nbsp; <span>&gt;</span> composer install &nbsp;&nbsp; <span>&gt;</span> git commit -m "backend ready" &nbsp;&nbsp; <span>&gt;</span> npm run build &nbsp;&nbsp;
+        <span>&gt;</span> php artisan migrate &nbsp;&nbsp; <span>&gt;</span> odoo-bin update -d erp_db &nbsp;&nbsp; <span>&gt;</span> composer install &nbsp;&nbsp; <span>&gt;</span> git commit -m "backend ready" &nbsp;&nbsp; <span>&gt;</span> npm run build &nbsp;&nbsp;
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<div class="bg-grid"></div>
-<div class="bg-glow glow-1" id="glow1"></div>
-<div class="bg-glow glow-2" id="glow2"></div>
-<div class="bg-glow glow-3" id="glow3"></div>
+<div class="bg-clip">
+  <div class="bg-grid"></div>
+  <div class="bg-glow glow-1" id="glow1"></div>
+  <div class="bg-glow glow-2" id="glow2"></div>
+  <div class="bg-glow glow-3" id="glow3"></div>
+</div>
 
 <nav id="navbar">
   <div class="logo"><span class="dot">&lt;</span>Zeeshan<span class="dot">/&gt;</span></div>
@@ -470,20 +604,29 @@ footer a{ color:var(--text-dim); }
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Let's talk</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
+<div class="nav-mobile-panel" id="navMobilePanel">
+  <a href="#about">About</a>
+  <a href="#stack">Stack</a>
+  <a href="#experience">Experience</a>
+  <a href="#work">Work</a>
+  <a href="#contact">Contact</a>
+  <a href="#contact" class="nav-cta">Let's talk</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="top">
   <canvas class="hero-canvas" id="heroCanvas"></canvas>
   <svg class="float-shape fs-1" width="120" height="120" viewBox="0 0 120 120" data-depth="0.03">
-    <circle cx="60" cy="60" r="46" fill="none" stroke="#6ec1e4" stroke-width="1" opacity="0.5"/>
-    <circle cx="60" cy="60" r="30" fill="none" stroke="#ffb454" stroke-width="1" opacity="0.4"/>
+    <circle cx="60" cy="60" r="46" fill="none" stroke="#ffb454" stroke-width="1" opacity="0.35"/>
+    <circle cx="60" cy="60" r="30" fill="none" stroke="#ffb454" stroke-width="1" opacity="0.22"/>
   </svg>
   <svg class="float-shape fs-2" width="90" height="90" viewBox="0 0 90 90" data-depth="0.05">
-    <rect x="10" y="10" width="70" height="70" rx="16" fill="none" stroke="#ec7ea6" stroke-width="1" opacity="0.4" transform="rotate(12 45 45)"/>
+    <rect x="10" y="10" width="70" height="70" rx="16" fill="none" stroke="#ffb454" stroke-width="1" opacity="0.28" transform="rotate(12 45 45)"/>
   </svg>
   <svg class="float-shape fs-3" width="100" height="100" viewBox="0 0 100 100" data-depth="0.04">
-    <path d="M50 5 L95 50 L50 95 L5 50 Z" fill="none" stroke="#7ee3b0" stroke-width="1" opacity="0.4"/>
+    <path d="M50 5 L95 50 L50 95 L5 50 Z" fill="none" stroke="#ffb454" stroke-width="1" opacity="0.22"/>
   </svg>
 
   <div class="hero-tag"><span class="pulse"></span>Available for backend &amp; ERP projects</div>
@@ -509,19 +652,16 @@ footer a{ color:var(--text-dim); }
 <section class="about" id="about">
   <div class="wrap about-grid">
     <div class="about-art reveal">
-      <svg width="100%" height="360" viewBox="0 0 380 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" height="100%" viewBox="0 0 380 360" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="display:block; max-width:100%;">
         <rect x="30" y="30" width="320" height="300" rx="18" fill="#121a2b" stroke="#22304d"/>
-        <circle cx="70" cy="66" r="6" fill="#ff5f57"/><circle cx="90" cy="66" r="6" fill="#febc2e"/><circle cx="110" cy="66" r="6" fill="#28c840"/>
-        <line x1="55" y1="110" x2="220" y2="110" stroke="#b18cf5" stroke-width="3" stroke-linecap="round"/>
-        <line x1="80" y1="132" x2="300" y2="132" stroke="#6ec1e4" stroke-width="3" stroke-linecap="round"/>
-        <line x1="80" y1="154" x2="260" y2="154" stroke="#7ee3b0" stroke-width="3" stroke-linecap="round"/>
-        <line x1="55" y1="176" x2="150" y2="176" stroke="#ec7ea6" stroke-width="3" stroke-linecap="round"/>
-        <line x1="80" y1="198" x2="290" y2="198" stroke="#ffb454" stroke-width="3" stroke-linecap="round"/>
-        <line x1="80" y1="220" x2="200" y2="220" stroke="#6ec1e4" stroke-width="3" stroke-linecap="round"/>
-        <line x1="55" y1="242" x2="270" y2="242" stroke="#b18cf5" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="70" cy="66" r="6" fill="#3a4a6b"/><circle cx="90" cy="66" r="6" fill="#3a4a6b"/><circle cx="110" cy="66" r="6" fill="#3a4a6b"/>
+        <line x1="55" y1="120" x2="220" y2="120" stroke="#ffb454" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+        <line x1="80" y1="150" x2="300" y2="150" stroke="#ffb454" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+        <line x1="80" y1="180" x2="230" y2="180" stroke="#ffb454" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+        <line x1="55" y1="210" x2="270" y2="210" stroke="#ffb454" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
         <g>
           <circle cx="330" cy="280" r="36" fill="#0d1321" stroke="#ffb454" stroke-width="1.5"/>
-          <path d="M316 280 l10 10 l18 -22" stroke="#7ee3b0" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M316 280 l10 10 l18 -22" stroke="#ffb454" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         </g>
       </svg>
     </div>
@@ -542,11 +682,13 @@ footer a{ color:var(--text-dim); }
 <!-- CODE SCREEN / STACK -->
 <section id="stack" style="padding:60px 0 130px; z-index:1;">
   <div class="wrap">
-    <div class="eyebrow reveal">What I work with</div>
-    <h2 class="section-title reveal">A peek at the stack</h2>
-    <p class="section-sub reveal">Tabs below cycle through the systems I spend the most time in: Laravel routing, Odoo ERP modules, MySQL schema design, and Laravel Broadcasting for real‑time events.</p>
+    <div class="stack-intro">
+      <div class="eyebrow reveal">What I work with</div>
+      <h2 class="section-title reveal">A peek at the stack</h2>
+      <p class="section-sub reveal">Tabs below cycle through the systems I spend the most time in: Laravel routing, Odoo ERP modules, MySQL schema design, and Laravel Broadcasting for real‑time events.</p>
+    </div>
 
-    <div class="mac-window reveal">
+    <div class="mac-window reveal" id="macWindow">
       <div class="mac-topbar">
         <span class="mac-dot red"></span><span class="mac-dot yellow"></span><span class="mac-dot green"></span>
         <div class="mac-tabs" id="macTabs">
@@ -656,7 +798,7 @@ footer a{ color:var(--text-dim); }
     <h2 class="section-title reveal">Projects</h2>
     <p class="section-sub reveal">A mix of production work and sample builds. Items marked <em>Sample</em> are placeholder projects standing in for real case studies — swap these for your actual work.</p>
 
-    <div class="project-grid reveal-stagger">
+    <div class="project-grid">
       <div class="project-card">
         <span class="sample-flag">Sample</span>
         <div class="project-visual">
@@ -730,27 +872,35 @@ footer a{ color:var(--text-dim); }
   <div class="wrap">© 2026 Zeeshan Haider — Built with Laravel‑grade attention to detail.</div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 /* ---------------- particle network background (reusable) ---------------- */
 function initParticleNetwork(canvas, opts){
   const ctx = canvas.getContext('2d');
   let w,h,particles;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const isSmall = window.innerWidth < 700;
   const cfg = Object.assign({ count:60, maxDist:130, colors:['#ffb454','#6ec1e4','#7ee3b0','#ff7a68'], speed:0.35, lineColor:'147,161,191', lineAlpha:0.16 }, opts||{});
+  if(isSmall) cfg.count = Math.round(cfg.count * 0.5);
   function resize(){
-    w = canvas.width = canvas.offsetWidth * devicePixelRatio;
-    h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+    w = canvas.width = canvas.offsetWidth * dpr;
+    h = canvas.height = canvas.offsetHeight * dpr;
   }
   function makeParticles(){
     particles = Array.from({length:cfg.count}, ()=>({
       x: Math.random()*w, y: Math.random()*h,
-      vx:(Math.random()-0.5)*cfg.speed*devicePixelRatio, vy:(Math.random()-0.5)*cfg.speed*devicePixelRatio,
+      vx:(Math.random()-0.5)*cfg.speed*dpr, vy:(Math.random()-0.5)*cfg.speed*dpr,
       c: cfg.colors[Math.floor(Math.random()*cfg.colors.length)],
-      r: (Math.random()*1.6+0.8)*devicePixelRatio
+      r: (Math.random()*1.6+0.8)*dpr
     }));
   }
   resize(); makeParticles();
   window.addEventListener('resize', ()=>{ resize(); makeParticles(); });
-  const maxDist = cfg.maxDist*devicePixelRatio;
+  window.addEventListener('load', ()=>{ resize(); makeParticles(); });
+  setTimeout(()=>{ resize(); makeParticles(); }, 300);
+  setTimeout(()=>{ resize(); makeParticles(); }, 1200);
+  const maxDist = cfg.maxDist*dpr;
   function frame(){
     ctx.clearRect(0,0,w,h);
     for(const p of particles){
@@ -764,7 +914,7 @@ function initParticleNetwork(canvas, opts){
         const dx=a.x-b.x, dy=a.y-b.y, dist=Math.sqrt(dx*dx+dy*dy);
         if(dist < maxDist){
           ctx.strokeStyle = 'rgba('+cfg.lineColor+','+(cfg.lineAlpha*(1-dist/maxDist))+')';
-          ctx.lineWidth = 1*devicePixelRatio;
+          ctx.lineWidth = 1*dpr;
           ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
         }
       }
@@ -782,7 +932,10 @@ initParticleNetwork(document.getElementById('loaderCanvas'), {
   colors:['#0d1220','#141b2d','#182238'],
   lineColor:'10,13,22', lineAlpha:0.5
 });
-initParticleNetwork(document.getElementById('heroCanvas'), { count:46, maxDist:150, speed:0.22 });
+initParticleNetwork(document.getElementById('heroCanvas'), {
+  count:64, maxDist:150, speed:0.22,
+  colors:['#ffb454'], lineColor:'255,180,84', lineAlpha:0.1
+});
 
 /* ---------------- preloader ---------------- */
 (function(){
@@ -793,13 +946,22 @@ initParticleNetwork(document.getElementById('heroCanvas'), { count:46, maxDist:1
     mask.className = 'char-mask';
     const s = document.createElement('span');
     s.textContent = ch;
-    s.style.animationDelay = (0.05 + i*0.045)+'s';
+    s.style.animationDelay = (0.6 + i*0.045)+'s';
     mask.appendChild(s);
     nameEl.appendChild(mask);
   });
   const bar = document.getElementById('loaderBar');
   const pct = document.getElementById('loaderPct');
-  const duration = 2600;
+  const statusEl = document.getElementById('loaderStatus');
+  const statusMsgs = ['Initializing environment', 'Compiling backend logic', 'Connecting to database', 'Finalizing interface'];
+  let statusIdx = 0;
+  statusEl.textContent = statusMsgs[0];
+  const statusTimer = setInterval(()=>{
+    statusIdx = (statusIdx+1) % statusMsgs.length;
+    statusEl.style.opacity = 0;
+    setTimeout(()=>{ statusEl.textContent = statusMsgs[statusIdx]; statusEl.style.opacity = 1; }, 150);
+  }, 650);
+  const duration = 3200;
   const start = performance.now();
   function tick(now){
     const t = Math.min(1, (now-start)/duration);
@@ -809,6 +971,9 @@ initParticleNetwork(document.getElementById('heroCanvas'), { count:46, maxDist:1
     pct.textContent = 'LOADING · '+val+'%';
     if(t < 1){ requestAnimationFrame(tick); }
     else{
+      clearInterval(statusTimer);
+      statusEl.style.opacity = 1;
+      statusEl.textContent = 'Ready';
       pct.textContent = 'READY';
       setTimeout(()=>{
         const preloader = document.getElementById('preloader');
@@ -816,7 +981,7 @@ initParticleNetwork(document.getElementById('heroCanvas'), { count:46, maxDist:1
         setTimeout(()=>{
           preloader.classList.add('done');
           document.body.classList.remove('locked');
-        }, 1000);
+        }, 800);
       }, 350);
     }
   }
@@ -845,6 +1010,20 @@ document.querySelectorAll('a, button, .tag, .skill-card, .project-card, .mac-tab
 const nav = document.getElementById('navbar');
 window.addEventListener('scroll', ()=>{
   nav.classList.toggle('scrolled', window.scrollY > 30);
+});
+
+/* ---------------- mobile menu toggle ---------------- */
+const navToggle = document.getElementById('navToggle');
+const navMobilePanel = document.getElementById('navMobilePanel');
+navToggle.addEventListener('click', ()=>{
+  navToggle.classList.toggle('open');
+  navMobilePanel.classList.toggle('open');
+});
+navMobilePanel.querySelectorAll('a').forEach(a=>{
+  a.addEventListener('click', ()=>{
+    navToggle.classList.remove('open');
+    navMobilePanel.classList.remove('open');
+  });
 });
 
 /* ---------------- parallax on mouse move (hero shapes + glows) ---------------- */
@@ -977,6 +1156,55 @@ setInterval(()=>{
   macTabs[autoTab].classList.add('active');
   renderCode(autoTab);
 }, 7000);
+
+/* ---------------- scroll-driven code screen enlarge (GSAP ScrollTrigger) ---------------- */
+if(window.gsap && window.ScrollTrigger){
+  gsap.registerPlugin(ScrollTrigger);
+
+  let mm = gsap.matchMedia();
+  mm.add('(min-width: 901px)', ()=>{
+    const tl = gsap.timeline({
+      scrollTrigger:{
+        trigger:'#stack',
+        start:'top top',
+        end:'+=180%',
+        scrub:0.6,
+        pin:true,
+        anticipatePin:1
+      }
+    });
+
+    const introEl = document.querySelector('.stack-intro');
+    const introGap = introEl ? Math.max(introEl.offsetHeight - 100, 40) : 80;
+
+    tl
+      // 1) intro text fades out
+      .to('.stack-intro', { opacity:0, filter:'blur(6px)', duration:0.9, ease:'power1.in' })
+      // 2) code screen moves up, stopping ~100px below the navbar (not flush against it)
+      .to('#macWindow', { y:-introGap, duration:0.9, ease:'power2.inOut' }, '<0.1')
+      // 3) it fixes/holds in that position
+      .to({}, { duration:0.35 })
+      // 4) a subtle 10% scale-up, both x and y from its own current size
+      .to('#macWindow', { scaleX:1.10, scaleY:1.10, duration:0.8, ease:'power2.inOut' })
+      // 5) hold, fully visible — then release naturally into the next section
+      .to({}, { duration:0.5 });
+  });
+
+  /* ---------------- project cards scroll animation ---------------- */
+  gsap.utils.toArray('.project-card').forEach((card, i)=>{
+    gsap.fromTo(card,
+      { y:70, opacity:0, scale:0.94 },
+      {
+        y:0, opacity:1, scale:1, duration:0.8, ease:'power3.out',
+        scrollTrigger:{
+          trigger: card,
+          start:'top 88%',
+          toggleActions:'play none none reverse'
+        }
+      }
+    );
+  });
+}
 </script>
 </body>
 </html>
