@@ -140,11 +140,10 @@ body.locked{ overflow:hidden; height:100vh; }
   opacity:0; animation: fadein .5s ease forwards; animation-delay:1.3s; letter-spacing:.1em;
 }
 
-/* preloader exit — simple fade, no doors */
+/* preloader exit — simple fade */
 #preloader{ transition: opacity .8s ease; }
 #preloader.opening{ opacity:0; }
 #preloader.opening .loader-content{ transform:scale(.94); }
-/* door-seam removed per request */
 
 /* ---------- glass panels ---------- */
 .glass{
@@ -202,6 +201,8 @@ h2.section-title{
 .reveal-stagger.in > *:nth-child(3){transition-delay:.25s;}
 .reveal-stagger.in > *:nth-child(4){transition-delay:.35s;}
 .reveal-stagger.in > *:nth-child(5){transition-delay:.45s;}
+.reveal-stagger.in > *:nth-child(6){transition-delay:.55s;}
+.reveal-stagger.in > *:nth-child(7){transition-delay:.65s;}
 
 /* ---------- background grid + glow ---------- */
 .bg-clip{
@@ -430,7 +431,7 @@ nav.scrolled{
 .code-line.shown{ opacity:1; }
 .type-cursor{ display:inline-block; width:7px; height:14px; background:var(--amber); vertical-align:middle; animation:blink 1s step-end infinite; }
 
-/* ---------- experience & odoo/erp / broadcasting section ---------- */
+/* ---------- experience ---------- */
 .experience{ padding:120px 0; z-index:1; }
 .timeline{ position:relative; padding-left:34px; }
 .timeline::before{ content:''; position:absolute; left:6px; top:6px; bottom:6px; width:1px; background:linear-gradient(var(--amber-dim), transparent); }
@@ -493,7 +494,14 @@ nav.scrolled{
 }
 .project-link{ font-family:var(--font-mono); font-size:12.5px; color:var(--amber); text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
 .project-link:hover{ text-decoration:underline; }
-.sample-flag{ position:absolute; top:14px; right:14px; font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; color:var(--text-faint); background:rgba(10,14,23,0.75); border:1px solid var(--line); padding:3px 9px; border-radius:20px; text-transform:uppercase; }
+.sample-flag{ position:absolute; top:14px; right:14px; font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; color:var(--text-faint); background:rgba(10,14,23,0.75); border:1px solid var(--line); padding:3px 9px; border-radius:20px; text-transform:uppercase; z-index:2; }
+.live-flag{ position:absolute; top:14px; right:14px; font-family:var(--font-mono); font-size:10px; letter-spacing:.06em; color:var(--green); background:rgba(10,14,23,0.75); border:1px solid rgba(126,227,176,0.35); padding:3px 9px; border-radius:20px; text-transform:uppercase; display:inline-flex; align-items:center; gap:6px; z-index:2; }
+.live-flag::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--green); display:inline-block; }
+.project-group-title{
+  grid-column:1 / -1; font-family:var(--font-mono); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--text-faint); display:flex; align-items:center; gap:14px; margin-top:6px;
+}
+.project-group-title::after{ content:''; flex:1; height:1px; background:var(--line); }
 
 /* ---------- contact ---------- */
 .contact{ padding:130px 0 100px; text-align:center; z-index:1; }
@@ -535,7 +543,7 @@ footer a{ color:var(--text-dim); }
   .skill-grid{ gap:10px; }
   .skill-card{ padding:16px 14px; }
   .projects{ padding:64px 0; }
-  .project-grid{ gap:18px; }
+  .project-grid{ gap:18px; grid-template-columns:1fr; }
   .mac-body{ padding:16px 16px; font-size:12px; min-height:220px; }
   .mac-tabs{ gap:0; }
   .mac-tab{ padding:6px 10px; font-size:11px; }
@@ -629,12 +637,12 @@ footer a{ color:var(--text-dim); }
     <path d="M50 5 L95 50 L50 95 L5 50 Z" fill="none" stroke="#ffb454" stroke-width="1" opacity="0.22"/>
   </svg>
 
-  <div class="hero-tag"><span class="pulse"></span>Available for backend &amp; ERP projects</div>
+  <div class="hero-tag"><span class="pulse"></span>Available for backend, ERP &amp; WordPress projects</div>
   <h1>Backend engineering for<br><span class="hl">ERP</span>, CRM &amp; real‑time systems.</h1>
   <div class="hero-typed-wrap">
     &gt; <span id="typed-role"></span><span class="caret"></span>
   </div>
-  <p class="hero-desc">I build and maintain Laravel and Odoo‑based backends — from database architecture and RESTful APIs to CRM portals and real‑time broadcasting — for teams that need systems which stay reliable in production.</p>
+  <p class="hero-desc">I build and maintain Laravel, Odoo and WordPress‑based systems — from database architecture and RESTful APIs to ERP/CRM portals and real‑time broadcasting — for teams that need systems which stay reliable in production.</p>
   <div class="hero-actions">
     <a href="#work" class="btn btn-primary">View my work</a>
     <a href="Zeeshan_Haider_Resume.pdf" download class="btn btn-ghost">⬇ Download Resume</a>
@@ -642,8 +650,8 @@ footer a{ color:var(--text-dim); }
   </div>
   <div class="hero-stats">
     <div class="stat"><b>2+</b><span>YEARS EXPERIENCE</span></div>
-    <div class="stat"><b>10+</b><span>PROJECTS SHIPPED</span></div>
-    <div class="stat"><b>2</b><span>COMPANIES WORKED WITH</span></div>
+    <div class="stat"><b>10</b><span>LIVE PROJECTS</span></div>
+    <div class="stat"><b>3</b><span>COMPANIES</span></div>
   </div>
   <div class="scroll-hint"><span class="line"></span>SCROLL</div>
 </section>
@@ -668,12 +676,12 @@ footer a{ color:var(--text-dim); }
     <div class="about-text">
       <div class="eyebrow">About</div>
       <h2 class="section-title">I like backends that don't break at 2am.</h2>
-      <p>I'm <strong>Zeeshan Haider</strong>, a Laravel &amp; PHP developer based in Islamabad, Pakistan, focused on <strong>ERP systems, database architecture, and real‑time backend features</strong>. My day‑to‑day is building on <strong>Laravel</strong> with <strong>MySQL</strong>, wiring up <strong>Odoo ERP</strong> customizations, and shipping <strong>RESTful APIs</strong> that other teams can build on top of.</p>
+      <p>I'm <strong>Zeeshan Haider</strong>, a Laravel &amp; PHP developer based in Islamabad, Pakistan, focused on <strong>ERP systems, database architecture, and real‑time backend features</strong>. My day‑to‑day is building on <strong>Laravel</strong> with <strong>MySQL</strong>, wiring up <strong>Odoo ERP</strong> customizations, building <strong>WordPress</strong> websites, and shipping <strong>RESTful APIs</strong> that other teams can build on top of.</p>
       <p>I've spent the last year designing schemas, writing migrations, and integrating third‑party services in production — with a growing focus on <strong>Odoo module customization</strong> and <strong>broadcasting / real‑time events</strong> for live data updates.</p>
       <p>Outside the core stack, I care about clean, modular, MVC‑disciplined code, and about handing off systems that are easy for the next developer to read.</p>
       <div class="tag-row">
         <span class="tag">Laravel</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Odoo ERP</span>
-        <span class="tag">REST APIs</span><span class="tag">Broadcasting</span><span class="tag">JavaScript</span><span class="tag">Bootstrap</span>
+        <span class="tag">WordPress</span><span class="tag">REST APIs</span><span class="tag">Broadcasting</span><span class="tag">JavaScript</span><span class="tag">Bootstrap</span>
       </div>
     </div>
   </div>
@@ -719,13 +727,12 @@ footer a{ color:var(--text-dim); }
         </div>
         <div class="tl-org">Telecom sector</div>
         <ul class="tl-list">
-          <li>Learning and building on <strong>Odoo ERP</strong> — developing and customizing modules for internal business operations.</li>
-          <li>Building a <strong>CRM portal</strong> to manage leads, customer accounts, and support workflows across the organization.</li>
+          <li>Learning and building on <strong>Odoo ERP</strong> — developing and customizing modules for internal business operations (<strong>erp.pace-tel.com</strong>).</li>
+          <li>Building a <strong>CRM portal</strong> (<strong>crm1.pace-tel.com</strong>) to manage leads, customer accounts, and support workflows across the organization.</li>
           <li>Working on <strong>accounting</strong> modules — invoicing, billing cycles, and financial record‑keeping tied into the ERP.</li>
-          <li>Supporting <strong>networking</strong> and telecom infrastructure data as part of internal system integrations.</li>
+          <li>Supporting <strong>networking</strong> and telecom infrastructure data as part of internal system integrations, including the <strong>vps.pace-tel.com</strong> server environment.</li>
           <li>Implementing <strong>real‑time broadcasting</strong> (WebSocket‑based events) to push live status updates through the CRM/ERP dashboards.</li>
         </ul>
-        <span class="badge-note">Placeholder wording for the Pace Telecom role — confirm exact scope, dates &amp; job title</span>
       </div>
 
       <div class="tl-item">
@@ -737,10 +744,11 @@ footer a{ color:var(--text-dim); }
         <div class="tl-org">Rawalpindi, Pakistan</div>
         <ul class="tl-list">
           <li>Building and maintaining Laravel backends, including database design and RESTful API endpoints.</li>
-          <li>Contributing backend work on <strong>pacetele.com</strong>, focused on server‑side logic and data handling.</li>
+          <li>Contributing backend work on <strong>pace-tel.com</strong>, focused on server‑side logic and data handling.</li>
+          <li>Building and delivering <strong>WordPress</strong> websites such as <strong>muttasilat.ae</strong> and <strong>velvey.com</strong>.</li>
+          <li>Building and maintaining e‑commerce websites including <strong>metroshoes.com.pk</strong>, <strong>pristinegadgetz.co.uk</strong>, <strong>ultragadgetz.com</strong> and <strong>velvystore.com</strong>.</li>
           <li>Applying <strong>Laravel Broadcasting</strong> to surface real‑time updates across internal tools.</li>
         </ul>
-        <span class="badge-note">pacetele.com scope — placeholder wording, confirm specifics</span>
       </div>
 
       <div class="tl-item">
@@ -784,6 +792,7 @@ footer a{ color:var(--text-dim); }
       <div class="skill-card"><div class="sk-icon"><svg width="26" height="26" viewBox="0 0 26 26"><rect x="2" y="2" width="22" height="22" rx="5" fill="none" stroke="#ffb454"/><path d="M8 13h10M13 8v10" stroke="#ffb454" stroke-width="1.4"/></svg></div><h4>Laravel / PHP</h4><p>APIs, MVC, Auth</p></div>
       <div class="skill-card"><div class="sk-icon"><svg width="26" height="26" viewBox="0 0 26 26"><ellipse cx="13" cy="8" rx="10" ry="4" fill="none" stroke="#6ec1e4"/><path d="M3 8v10c0 2.2 4.5 4 10 4s10-1.8 10-4V8" fill="none" stroke="#6ec1e4"/></svg></div><h4>MySQL</h4><p>Schema &amp; migrations</p></div>
       <div class="skill-card"><div class="sk-icon"><svg width="26" height="26" viewBox="0 0 26 26"><rect x="3" y="3" width="20" height="20" rx="4" fill="none" stroke="#7ee3b0"/><circle cx="13" cy="13" r="5" fill="none" stroke="#7ee3b0"/></svg></div><h4>Odoo ERP</h4><p>Module customization</p></div>
+      <div class="skill-card"><div class="sk-icon"><svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="10" fill="none" stroke="#6ec1e4"/><path d="M7 9l4 9 2-6 2 6 4-9" fill="none" stroke="#6ec1e4" stroke-width="1.3"/></svg></div><h4>WordPress</h4><p>Themes, plugins, sites</p></div>
       <div class="skill-card"><div class="sk-icon"><svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="3" fill="#ec7ea6"/><circle cx="13" cy="13" r="8" fill="none" stroke="#ec7ea6" opacity="0.6"/><circle cx="13" cy="13" r="11.5" fill="none" stroke="#ec7ea6" opacity="0.3"/></svg></div><h4>Broadcasting</h4><p>Real‑time events</p></div>
       <div class="skill-card"><div class="sk-icon"><svg width="26" height="26" viewBox="0 0 26 26"><path d="M4 20 L11 5 L18 20" fill="none" stroke="#b18cf5"/><path d="M7 15h8" stroke="#b18cf5"/></svg></div><h4>HTML / CSS / JS</h4><p>Bootstrap, GSAP</p></div>
       <div class="skill-card"><div class="sk-icon"><svg width="26" height="26" viewBox="0 0 26 26"><rect x="3" y="6" width="20" height="14" rx="2" fill="none" stroke="#ffb454"/><path d="M3 10h20" stroke="#ffb454"/></svg></div><h4>REST APIs</h4><p>Design &amp; integration</p></div>
@@ -796,101 +805,141 @@ footer a{ color:var(--text-dim); }
   <div class="wrap">
     <div class="eyebrow reveal">Selected work</div>
     <h2 class="section-title reveal">Projects</h2>
-    <p class="section-sub reveal">A mix of production work and sample builds. Items marked <em>Sample</em> are placeholder projects standing in for real case studies — swap these for your actual work.</p>
+    <p class="section-sub reveal">Live systems and websites I've built or worked on — ERP and CRM platforms, company sites, WordPress sites and online stores. Click any card to visit.</p>
 
     <div class="project-grid">
 
-      <!-- NEW: ERP Installations -->
+      <div class="project-group-title">Pace Telecom systems</div>
+
       <div class="project-card">
-        <span class="sample-flag">Sample</span>
+        <span class="live-flag">Live</span>
         <div class="project-visual">
           <svg viewBox="0 0 100 70"><rect x="8" y="10" width="38" height="48" rx="3" fill="none" stroke="#ffb454" stroke-width="1.2"/><rect x="54" y="10" width="38" height="48" rx="3" fill="none" stroke="#6ec1e4" stroke-width="1.2"/><path d="M46 34h8" stroke="#7ee3b0" stroke-width="1.4"/><circle cx="27" cy="24" r="3" fill="none" stroke="#ffb454"/><rect x="18" y="34" width="18" height="5" rx="1.5" fill="none" stroke="#ffb454"/><rect x="18" y="44" width="18" height="5" rx="1.5" fill="none" stroke="#ffb454"/><circle cx="73" cy="24" r="3" fill="none" stroke="#6ec1e4"/><rect x="64" y="34" width="18" height="5" rx="1.5" fill="none" stroke="#6ec1e4"/><rect x="64" y="44" width="18" height="5" rx="1.5" fill="none" stroke="#6ec1e4"/></svg>
         </div>
         <div class="project-body">
-          <h3>ERP Installation &amp; Deployment</h3>
-          <p>End‑to‑end ERP setup for a client business — server provisioning, module configuration, data migration, and user training across finance, inventory, and HR modules.</p>
-          <div class="project-stack"><span>Odoo</span><span>Linux</span><span>PostgreSQL</span><span>Nginx</span></div>
-          <a href="#" class="project-link">View case study →</a>
+          <h3>Pace Telecom ERP</h3>
+          <p>Odoo‑based ERP covering internal operations — accounting, billing, CRM and customer management — with custom modules and live status updates.</p>
+          <div class="project-stack"><span>Odoo</span><span>Python</span><span>PostgreSQL</span><span>Broadcasting</span></div>
+          <a href="https://erp.pace-tel.com" target="_blank" rel="noopener" class="project-link">Visit erp.pace-tel.com →</a>
         </div>
       </div>
 
-      <!-- NEW: University Portal -->
       <div class="project-card">
-        <span class="sample-flag">Sample</span>
-        <div class="project-visual">
-          <svg viewBox="0 0 100 70"><path d="M50 10L90 26 50 42 10 26z" fill="none" stroke="#b18cf5" stroke-width="1.2"/><path d="M25 30v14c0 5 11 9 25 9s25-4 25-9V30" fill="none" stroke="#b18cf5" stroke-width="1.2"/><line x1="90" y1="26" x2="90" y2="42" stroke="#b18cf5" stroke-width="1.2"/></svg>
-        </div>
-        <div class="project-body">
-          <h3>University Student Portal</h3>
-          <p>Web portal for student registration, course enrollment, result management, and faculty communication — built for a university with role‑based dashboards for students, faculty, and admins.</p>
-          <div class="project-stack"><span>Laravel</span><span>PHP</span><span>MySQL</span><span>Bootstrap</span></div>
-          <a href="#" class="project-link">View case study →</a>
-        </div>
-      </div>
-
-      <!-- NEW: Company CRM -->
-      <div class="project-card">
-        <span class="sample-flag">Sample</span>
+        <span class="live-flag">Live</span>
         <div class="project-visual">
           <svg viewBox="0 0 100 70"><circle cx="30" cy="24" r="8" fill="none" stroke="#7ee3b0" stroke-width="1.2"/><circle cx="70" cy="24" r="8" fill="none" stroke="#7ee3b0" stroke-width="1.2"/><path d="M14 56c2-12 12-18 16-18s14 6 16 18" fill="none" stroke="#7ee3b0" stroke-width="1.2"/><path d="M54 56c2-12 12-18 16-18s14 6 16 18" fill="none" stroke="#7ee3b0" stroke-width="1.2"/><line x1="38" y1="24" x2="62" y2="24" stroke="#ffb454" stroke-width="1.2"/></svg>
         </div>
         <div class="project-body">
-          <h3>Company CRM System</h3>
-          <p>Full CRM built from scratch for internal use — lead tracking, client pipelines, task assignment, and reporting dashboards, replacing spreadsheet‑based workflows.</p>
-          <div class="project-stack"><span>Laravel</span><span>MySQL</span><span>REST API</span><span>Chart.js</span></div>
-          <a href="#" class="project-link">View case study →</a>
+          <h3>Pace Telecom CRM</h3>
+          <p>CRM portal for managing leads, customer accounts and support workflows, with live status updates pushed to dashboards.</p>
+          <div class="project-stack"><span>Laravel</span><span>MySQL</span><span>REST API</span><span>Broadcasting</span></div>
+          <a href="https://crm1.pace-tel.com" target="_blank" rel="noopener" class="project-link">Visit crm1.pace-tel.com →</a>
         </div>
       </div>
 
       <div class="project-card">
-        <span class="sample-flag">Sample</span>
+        <span class="live-flag">Live</span>
         <div class="project-visual">
           <svg viewBox="0 0 100 70"><rect x="5" y="10" width="90" height="50" rx="4" fill="none" stroke="#ffb454" stroke-width="1.2"/><line x1="5" y1="24" x2="95" y2="24" stroke="#ffb454" stroke-width="1"/><circle cx="14" cy="17" r="1.6" fill="#ffb454"/><circle cx="20" cy="17" r="1.6" fill="#ffb454"/><rect x="12" y="32" width="30" height="6" rx="2" fill="none" stroke="#6ec1e4"/><rect x="12" y="42" width="50" height="6" rx="2" fill="none" stroke="#6ec1e4"/><rect x="70" y="32" width="18" height="16" rx="2" fill="none" stroke="#7ee3b0"/></svg>
         </div>
         <div class="project-body">
-          <h3>Odoo ERP Inventory Module</h3>
-          <p>Custom Odoo module extending inventory &amp; sales workflows, syncing stock levels with a MySQL reporting layer for real‑time warehouse visibility.</p>
-          <div class="project-stack"><span>Odoo</span><span>Python</span><span>MySQL</span><span>XML‑RPC</span></div>
-          <a href="#" class="project-link">View case study →</a>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <span class="sample-flag">Sample</span>
-        <div class="project-visual">
-          <svg viewBox="0 0 100 70"><circle cx="50" cy="35" r="22" fill="none" stroke="#ec7ea6" stroke-width="1.2"/><circle cx="50" cy="35" r="4" fill="#ec7ea6"/><path d="M50 13v8M50 49v8M28 35h8M64 35h8" stroke="#ec7ea6" stroke-width="1.2"/></svg>
-        </div>
-        <div class="project-body">
-          <h3>Live Order Broadcasting</h3>
-          <p>Laravel Broadcasting + WebSockets setup pushing live order status updates to a dashboard the moment records change in MySQL.</p>
-          <div class="project-stack"><span>Laravel</span><span>Broadcasting</span><span>Pusher</span><span>JS</span></div>
-          <a href="#" class="project-link">View case study →</a>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <span class="sample-flag">Sample</span>
-        <div class="project-visual">
-          <svg viewBox="0 0 100 70"><rect x="10" y="14" width="35" height="42" rx="3" fill="none" stroke="#7ee3b0" stroke-width="1.2"/><rect x="55" y="14" width="35" height="42" rx="3" fill="none" stroke="#6ec1e4" stroke-width="1.2"/><path d="M45 35h10" stroke="#ffb454" stroke-width="1.4"/><path d="M52 31l3 4-3 4" fill="none" stroke="#ffb454" stroke-width="1.2"/></svg>
-        </div>
-        <div class="project-body">
-          <h3>Pacetele Platform — Backend</h3>
-          <p>Backend contributions on pacetele.com: server‑side logic, data handling, and API endpoints supporting the platform's core features.</p>
+          <h3>Pace Telecom Website</h3>
+          <p>Company website for a telecom provider, with server‑side logic, data handling and backend integrations.</p>
           <div class="project-stack"><span>Laravel</span><span>PHP</span><span>MySQL</span><span>REST API</span></div>
-          <a href="https://pacetele.com" target="_blank" rel="noopener" class="project-link">Visit pacetele.com →</a>
+          <a href="https://pace-tel.com" target="_blank" rel="noopener" class="project-link">Visit pace-tel.com →</a>
         </div>
       </div>
 
       <div class="project-card">
-        <span class="sample-flag">Sample</span>
+        <span class="live-flag">Live</span>
         <div class="project-visual">
-          <svg viewBox="0 0 100 70"><rect x="8" y="8" width="84" height="54" rx="4" fill="none" stroke="#b18cf5" stroke-width="1.2"/><path d="M20 44l14-16 12 12 14-18 12 22" fill="none" stroke="#b18cf5" stroke-width="1.4"/></svg>
+          <svg viewBox="0 0 100 70"><rect x="20" y="8" width="60" height="16" rx="3" fill="none" stroke="#7ee3b0" stroke-width="1.2"/><rect x="20" y="28" width="60" height="16" rx="3" fill="none" stroke="#7ee3b0" stroke-width="1.2"/><rect x="20" y="48" width="60" height="16" rx="3" fill="none" stroke="#7ee3b0" stroke-width="1.2"/><circle cx="30" cy="16" r="2" fill="#7ee3b0"/><circle cx="30" cy="36" r="2" fill="#7ee3b0"/><circle cx="30" cy="56" r="2" fill="#7ee3b0"/></svg>
         </div>
         <div class="project-body">
-          <h3>Role‑Based Admin Panel</h3>
-          <p>Multi‑tenant admin dashboard with authentication, authorization, and role‑based access control built on Laravel's MVC architecture.</p>
-          <div class="project-stack"><span>Laravel</span><span>MySQL</span><span>Bootstrap</span><span>RBAC</span></div>
-          <a href="#" class="project-link">View case study →</a>
+          <h3>Pace Telecom VPS Platform</h3>
+          <p>Server and VPS environment hosting the company's applications — set up and maintained for deployment and day‑to‑day reliability.</p>
+          <div class="project-stack"><span>Linux</span><span>Nginx</span><span>VPS</span><span>Deployment</span></div>
+          <a href="https://vps.pace-tel.com" target="_blank" rel="noopener" class="project-link">Visit vps.pace-tel.com →</a>
+        </div>
+      </div>
+
+      <div class="project-group-title">Websites &amp; online stores</div>
+
+      <div class="project-card">
+        <span class="live-flag">Live</span>
+        <div class="project-visual">
+          <svg viewBox="0 0 100 70"><circle cx="50" cy="35" r="24" fill="none" stroke="#6ec1e4" stroke-width="1.2"/><path d="M34 26l10 22 6-16 6 16 10-22" fill="none" stroke="#6ec1e4" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="project-body">
+          <h3>Muttasilat.ae</h3>
+          <p>WordPress website for a UAE‑based business — theme setup, content structure, plugins and performance tuning.</p>
+          <div class="project-stack"><span>WordPress</span><span>PHP</span><span>MySQL</span></div>
+          <a href="https://muttasilat.ae" target="_blank" rel="noopener" class="project-link">Visit muttasilat.ae →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="live-flag">Live</span>
+        <div class="project-visual">
+          <svg viewBox="0 0 100 70"><circle cx="50" cy="35" r="24" fill="none" stroke="#ec7ea6" stroke-width="1.2"/><path d="M34 26l10 22 6-16 6 16 10-22" fill="none" stroke="#ec7ea6" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="project-body">
+          <h3>Velvey.com</h3>
+          <p>WordPress site with a custom‑configured theme, plugin integration and content management set up for easy day‑to‑day updates.</p>
+          <div class="project-stack"><span>WordPress</span><span>PHP</span><span>MySQL</span></div>
+          <a href="https://velvey.com" target="_blank" rel="noopener" class="project-link">Visit velvey.com →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="live-flag">Live</span>
+        <div class="project-visual">
+          <svg viewBox="0 0 100 70"><path d="M28 24h44l-4 32H32z" fill="none" stroke="#ffb454" stroke-width="1.2" stroke-linejoin="round"/><path d="M40 24c0-8 4-13 10-13s10 5 10 13" fill="none" stroke="#ffb454" stroke-width="1.2"/><circle cx="42" cy="38" r="1.8" fill="#ffb454"/><circle cx="58" cy="38" r="1.8" fill="#ffb454"/></svg>
+        </div>
+        <div class="project-body">
+          <h3>Metro Shoes</h3>
+          <p>Online shoe store for the Pakistani market — product catalog, storefront and order handling.</p>
+          <div class="project-stack"><span>E‑commerce</span><span>Product Catalog</span><span>Orders</span><span>Responsive</span></div>
+          <a href="https://metroshoes.com.pk" target="_blank" rel="noopener" class="project-link">Visit metroshoes.com.pk →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="live-flag">Live</span>
+        <div class="project-visual">
+          <svg viewBox="0 0 100 70"><path d="M28 24h44l-4 32H32z" fill="none" stroke="#6ec1e4" stroke-width="1.2" stroke-linejoin="round"/><path d="M40 24c0-8 4-13 10-13s10 5 10 13" fill="none" stroke="#6ec1e4" stroke-width="1.2"/><circle cx="42" cy="38" r="1.8" fill="#6ec1e4"/><circle cx="58" cy="38" r="1.8" fill="#6ec1e4"/></svg>
+        </div>
+        <div class="project-body">
+          <h3>Pristine Gadgetz</h3>
+          <p>UK online gadgets store — product catalog, storefront and order handling.</p>
+          <div class="project-stack"><span>E‑commerce</span><span>Product Catalog</span><span>Orders</span><span>Responsive</span></div>
+          <a href="https://pristinegadgetz.co.uk" target="_blank" rel="noopener" class="project-link">Visit pristinegadgetz.co.uk →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="live-flag">Live</span>
+        <div class="project-visual">
+          <svg viewBox="0 0 100 70"><path d="M28 24h44l-4 32H32z" fill="none" stroke="#7ee3b0" stroke-width="1.2" stroke-linejoin="round"/><path d="M40 24c0-8 4-13 10-13s10 5 10 13" fill="none" stroke="#7ee3b0" stroke-width="1.2"/><circle cx="42" cy="38" r="1.8" fill="#7ee3b0"/><circle cx="58" cy="38" r="1.8" fill="#7ee3b0"/></svg>
+        </div>
+        <div class="project-body">
+          <h3>Ultra Gadgetz</h3>
+          <p>Online gadgets store with a structured product catalog, cart and checkout flow.</p>
+          <div class="project-stack"><span>E‑commerce</span><span>Product Catalog</span><span>Checkout</span><span>Responsive</span></div>
+          <a href="https://ultragadgetz.com" target="_blank" rel="noopener" class="project-link">Visit ultragadgetz.com →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="live-flag">Live</span>
+        <div class="project-visual">
+          <svg viewBox="0 0 100 70"><path d="M28 24h44l-4 32H32z" fill="none" stroke="#b18cf5" stroke-width="1.2" stroke-linejoin="round"/><path d="M40 24c0-8 4-13 10-13s10 5 10 13" fill="none" stroke="#b18cf5" stroke-width="1.2"/><circle cx="42" cy="38" r="1.8" fill="#b18cf5"/><circle cx="58" cy="38" r="1.8" fill="#b18cf5"/></svg>
+        </div>
+        <div class="project-body">
+          <h3>Velvy Store</h3>
+          <p>Online store with product catalog, cart and checkout, built for easy day‑to‑day management.</p>
+          <div class="project-stack"><span>E‑commerce</span><span>Product Catalog</span><span>Checkout</span><span>Responsive</span></div>
+          <a href="https://velvystore.com" target="_blank" rel="noopener" class="project-link">Visit velvystore.com →</a>
         </div>
       </div>
     </div>
@@ -901,7 +950,7 @@ footer a{ color:var(--text-dim); }
 <section class="contact" id="contact">
   <div class="wrap">
     <div class="eyebrow reveal" style="justify-content:center;">Get in touch</div>
-    <h2 class="reveal">Have a Laravel, Odoo, or ERP project in mind?</h2>
+    <h2 class="reveal">Have a Laravel, Odoo, WordPress, e‑commerce or ERP project in mind?</h2>
     <p class="reveal">I'm currently open to freelance and full‑time backend roles — reach out and let's talk about what you're building.</p>
     <div class="contact-links reveal">
       <a class="contact-card" href="mailto:zh1872811@gmail.com">✉ zh1872811@gmail.com</a>
@@ -1091,7 +1140,7 @@ const io = new IntersectionObserver((entries)=>{
 document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=> io.observe(el));
 
 /* ---------------- typed hero role ---------------- */
-const roles = ['Laravel Developer', 'Odoo ERP Specialist', 'CRM Portal Builder', 'MySQL Database Engineer', 'Real-time Backend Builder'];
+const roles = ['Laravel Developer', 'Odoo ERP Specialist', 'WordPress Developer', 'CRM Portal Builder', 'MySQL Database Engineer', 'Real-time Backend Builder'];
 const typedEl = document.getElementById('typed-role');
 let ri=0, ci=0, deleting=false;
 function typeLoop(){
@@ -1221,15 +1270,10 @@ if(window.gsap && window.ScrollTrigger){
     const introGap = introEl ? Math.max(introEl.offsetHeight - 100, 40) : 80;
 
     tl
-      // 1) intro text fades out
       .to('.stack-intro', { opacity:0, filter:'blur(6px)', duration:0.9, ease:'power1.in' })
-      // 2) code screen moves up, stopping ~100px below the navbar (not flush against it)
       .to('#macWindow', { y:-introGap, duration:0.9, ease:'power2.inOut' }, '<0.1')
-      // 3) it fixes/holds in that position
       .to({}, { duration:0.35 })
-      // 4) a subtle 10% scale-up, both x and y from its own current size
       .to('#macWindow', { scaleX:1.10, scaleY:1.10, duration:0.8, ease:'power2.inOut' })
-      // 5) hold, fully visible — then release naturally into the next section
       .to({}, { duration:0.5 });
   });
 
